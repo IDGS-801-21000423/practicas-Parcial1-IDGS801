@@ -1,4 +1,6 @@
-
+'''
+1.- Pedir Numero: 5
+'''
 class MostrarAsteriscos:
   # Declaracion del constructor de la clase
     def __init__(self):

@@ -1,4 +1,12 @@
+'''
+2.- Cuantos numeros: 10
 
+- Ordenado
+- Pares
+- Impares
+- Repetidos
+ 
+'''
 class Listas:
   
   # Declaracion del constructor de la clase
