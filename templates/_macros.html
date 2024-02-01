@@ -1,0 +1,10 @@
+{% macro datosDistancias(name, placeholder, type='text') %}
+
+<p><input name="{{name}}" type="{{type}}" placeholder="{{placeholder}}" /></p>
+
+{% endmacro %}
+
+{% macro camposDistancias(field) %}
+<td>{{field.label}}</td>
+<dd>{{field(**kwargs)| safe}}</dd>
+{% endmacro %}

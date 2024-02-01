@@ -1,0 +1,33 @@
+{% extends "layout1.html" %}
+{% block content %}
+{% import "_macros.html" as macros %}
+<h1>Distancias</h1>
+<form action="" method="POST" novalidate>
+  <div class="row control-group">
+    <div class="form-groupform-group col-xs-12 floating-label-form-group controls">
+      {{macros.camposDistancias(form.distanciaX, class="form-control")}}
+    </div>
+  </div>
+  <div class="row control-group">
+    <div class="form-groupform-group col-xs-12 floating-label-form-group controls">
+      {{macros.camposDistancias(form.distanciaX2, class="form-control")}}
+    </div>
+  </div>
+  <div class="row control-group">
+    <div class="form-groupform-group col-xs-12 floating-label-form-group controls">
+      {{macros.camposDistancias(form.distanciaY, class="form-control")}}
+    </div>
+  </div>
+  <div class="row control-group">
+    <div class="form-groupform-group col-xs-12 floating-label-form-group controls">
+      {{macros.camposDistancias(form.distanciaY2, class="form-control")}}
+    </div>
+  </div>
+  <input type="submit" id="btn1" name="btn1" value="Calcular">
+</form>
+<h2>Distancia X1: {{distanciaX}}</h2>
+<h2>Distancia X2: {{distanciaX2}}</h2>
+<h2>Distancia Y1: {{distanciaY}}</h2>
+<h2>Distancia Y2: {{distanciaY2}}</h2>
+<h2>Distancia Calculada: {{distancia_calculada}}</h2>
+{% endblock %}
