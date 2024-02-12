@@ -1,0 +1,10 @@
+{% macro datosColores(name, placeholder) %}
+
+<p><select name="{{name}}" placeholder="{{placeholder}}"></select></p>
+
+{% endmacro %}
+
+{% macro camposColores(field) %}
+<td>{{field.label}}</td>
+<dd>{{field(**kwargs)| safe}}</dd>
+{% endmacro %}

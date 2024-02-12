@@ -77,6 +77,151 @@ def distancias():
   return render_template("distancias.html", form = distancias_clase, distanciaX=distanciaX, distanciaX2=distanciaX2, distanciaY=distanciaY, distanciaY2=distanciaY2, distancia_calculada=distancia_calculada)
   
 
+@app.route("/colores", methods = ['GET', 'POST'])
+def colores():
+  colores_clase = forms.UserFormColors(request.form)
+  banda1 = ""
+  banda2 = ""
+  banda3 = ""
+  tol = ""
+  primerB = ""
+  valor = ""
+  valorMinimoIng = ""
+  valorMaximoIng = ""
+  colortd = ""
+  colortd2 = ""
+  colortd3 = ""
+  colortol = ""
+  textBanda1 = ""
+  textBanda2 = ""
+  textBanda3 = ""
+  textTol = ""
+  if request.method == 'POST':
+    banda1 = colores_clase.banda1.data
+    banda2 = colores_clase.banda2.data
+    banda3 = colores_clase.banda3.data
+    tol = colores_clase.tol.data  
+    primerB = banda1 + banda2
+    
+    if banda1 == '0':
+      colortd = '#000000'
+      textBanda1 = 'Negro'
+    elif banda1 == '1':
+      colortd = '#A52A2A'
+      textBanda1 = 'Cafe'
+    elif banda1 == '2':
+      colortd = '#FF0000'
+      textBanda1 = 'Rojo'
+    elif banda1 == '3':
+      colortd = '#FFA500'
+      textBanda1 = 'Naranja'
+    elif banda1 == '4':
+      colortd = '#FFFF00'
+      textBanda1 = 'Amarillo'
+    elif banda1 == '5':
+      colortd = '#008000'
+      textBanda1 = 'Verde'
+    elif banda1 == '6':
+      colortd = '#0000FF'
+      textBanda1 = 'Azul'
+    elif banda1 == '7':
+      colortd = '#800080'
+      textBanda1 = 'Violeta'
+    elif banda1 == '8':
+      colortd = '#808080'
+      textBanda1 = 'Gris'
+    elif banda1 == '9':
+      colortd = '#FFFFFF'
+      textBanda1 = 'Blanco'
+    else:
+      colortd = ''
+      textBanda1 = ''
+    
+    if banda2 == '0':
+      colortd2 = '#000000'
+      textBanda2 = 'Negro'
+    elif banda2 == '1':
+      colortd2 = '#A52A2A'
+      textBanda2 = 'Cafe'
+    elif banda2 == '2':
+      colortd2 = '#FF0000'
+      textBanda2 = 'Rojo'
+    elif banda2 == '3':
+      colortd2 = '#FFA500'
+      textBanda2 = 'Naranja'
+    elif banda2 == '4':
+      colortd2 = '#FFFF00'
+      textBanda2 = 'Amarillo'
+    elif banda2 == '5':
+      colortd2 = '#008000'
+      textBanda2 = 'Verde'
+    elif banda2 == '6':
+      colortd2 = '#0000FF'
+      textBanda2 = 'Azul'
+    elif banda2 == '7':
+      colortd2 = '#800080'
+      textBanda2 = 'Violeta'
+    elif banda2 == '8':
+      colortd2 = '#808080'
+      textBanda2 = 'Gris'
+    elif banda2 == '9':
+      colortd2 = '#FFFFFF'
+      textBanda2 = 'Blanco'
+    else:
+      colortd2 = ''
+      textBanda2 = ''
+    
+    
+    if banda3 == '1':
+      colortd3 = '#000000'
+      textBanda3 = 'Negro'
+    elif banda3 == '10':
+      colortd3 = '#A52A2A'
+      textBanda3 = 'Cafe'
+    elif banda3 == '100':
+      colortd3 = '#FF0000'
+      textBanda3 = 'Rojo'
+    elif banda3 == '1000':
+      colortd3 = '#FFA500'
+      textBanda3 = 'Naranja'
+    elif banda3 == '10000':
+      colortd3 = '#FFFF00'
+      textBanda3 = 'Amarillo'
+    elif banda3 == '100000':
+      colortd3 = '#008000'
+      textBanda3 = 'Verde'
+    elif banda3 == '1000000':
+      colortd3 = '#0000FF'
+      textBanda3 = 'Azul'
+    elif banda3 == '10000000':
+      colortd3 = '#800080'
+      textBanda3 = 'Violeta'
+    elif banda3 == '100000000':
+      colortd3 = '#808080'
+      textBanda3 = 'Gris'
+    elif banda3 == '1000000000':
+      colortd3 = '#FFFFFF'
+      textBanda3 = 'Blanco'
+    else:
+      colortd3 = ''
+      textBanda3 = ''
+    
+    valor = int(primerB) * int(banda3)
+    if request.form.get("tol") == "oro":
+      colortol = '#FFD700'
+      textTol = "Oro"
+      porcentaje = int(valor) * 5 / 100
+      valorMaximoIng = valor + porcentaje
+      valorMinimoIng = valor - porcentaje
+    elif request.form.get("tol") == "plata":
+      colortol = '#C0C0C0'
+      textTol = "Plata"
+      porcentaje = int(valor) * 10 / 100
+      valorMaximoIng = valor + porcentaje
+      valorMinimoIng = valor - porcentaje
+    
+  return render_template("colores-resistencias.html", form = colores_clase, banda1=banda1, banda2=banda2, banda3=banda3, tol=tol, primerB=primerB, valor=valor, valorMaximoIng=valorMaximoIng, valorMinimoIng=valorMinimoIng, colortd=colortd,colortd2=colortd2,colortd3=colortd3,colortol=colortol, textBanda1=textBanda1, textBanda2=textBanda2, textBanda3=textBanda3, textTol=textTol)
+
 
 if __name__ =="__main__":
   app.run(debug=True)   # Cambios en tiempo real

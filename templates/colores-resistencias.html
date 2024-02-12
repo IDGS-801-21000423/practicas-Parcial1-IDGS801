@@ -1,0 +1,50 @@
+{% extends "layout1.html" %} {% block content %} {% import
+"_macros-colores.html" as macros %}
+<h3>Colores Resistencias</h3>
+<form action="" method="POST" novalidate>
+  <div class="row control-group">
+    <div class="form-groupform-group col-xs-12 floating-label-form-group controls">
+      {{macros.camposColores(form.banda1, class="form-control")}}
+    </div>
+  </div>
+  <div class="row control-group">
+    <div class="form-groupform-group col-xs-12 floating-label-form-group controls">
+      {{macros.camposColores(form.banda2, class="form-control")}}
+    </div>
+  </div>
+  <div class="row control-group">
+    <div class="form-groupform-group col-xs-12 floating-label-form-group controls">
+      {{macros.camposColores(form.banda3, class="form-control")}}
+    </div>
+  </div>
+  <label>Tolerancia</label>
+  <input type="radio" name="tol" value="oro" />
+  <br>
+  <label>Oro</label>
+  <input type="radio" name="tol" value="plata" />
+  <label>Plata</label>
+  <input type="submit" id="btn1" name="btn1" value="Registrar" />
+</form>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">color 1</th>
+      <th scope="col">color 2</th>
+      <th scope="col">color 3</th>
+      <th scope="col">Tolerancia</th>
+      <th scope="col">Valor</th>
+      <th scope="col">Valor Maximo</th>
+      <th scope="col">Valor Minimo</th>
+    </tr>
+    <tr>
+      <td bgcolor = '{{colortd}}'>{{textBanda1}}</td>
+      <td bgcolor = '{{colortd2}}'>{{textBanda2}}</td>
+      <td bgcolor = '{{colortd3}}'>{{textBanda3}}</td>
+      <td bgcolor='{{colortol}}'>{{textTol}}</td>
+      <td>{{valor}}</td>
+      <td>{{valorMaximoIng}}</td>
+      <td>{{valorMinimoIng}}</td>
+    </tr>
+  </thead>
+</table> 
+{% endblock %}
