@@ -1,0 +1,37 @@
+{% extends "layout1.html "%}
+{% block content %}
+{% import "_macros.html" as macros %}
+<span><b>Registrar palabras:</b></span>
+<br>
+<form action="" method="POST" novalidate>
+  <div class="row control-group">
+    <div class="form-groupform-group col-xs-12 floating-label-form-group controls">
+      {{macros.camposIdiomas(form.wordEng, class="form-control")}}
+    </div>
+  </div>
+  <div class="row control-group">
+    <div class="form-groupform-group col-xs-12 floating-label-form-group controls">
+      {{macros.camposIdiomas(form.wordSpa, class="form-control")}}
+    </div>
+  </div>
+  <input type="submit" id="btn1" name="btn1" value="Registrar">
+  <hr>
+</form>
+<form action="" method="POST" novalidate>
+  <span><b>Buscar palabras:</b></span>
+  <br>
+  <input type="radio" name="selectLang" value="ingles" />
+  <br>
+  <label>Ingles</label>
+  <input type="radio" name="selectLang" value="espanol" />
+  <label>Español</label>
+  <div class="row control-group">
+    <div class="form-groupform-group col-xs-12 floating-label-form-group controls">
+      {{macros.camposIdiomas(form.palabra, class="form-control")}}
+      <br>
+      &nbsp;&nbsp;&nbsp;<input type="text" value='{{wordEq}}'>
+    </div>
+  </div>
+  <input type="submit" id="btn2" name="btn2" value="Buscar" onclick="buscar_palabras()">
+</form>
+{% endblock %}

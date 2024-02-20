@@ -1,18 +1,31 @@
 from wtforms import Form
 from flask_wtf import FlaskForm
 
-from wtforms import StringField, TelField, IntegerField, FloatField, SelectField, RadioField
+from wtforms import StringField, IntegerField, FloatField, SelectField, RadioField
 from wtforms import EmailField
 
-from wtforms.validators import DataRequired, Email
+from wtforms import validators
+
+class UserFormLanguagesWords(Form):
+  wordEng = StringField('wordEng', validators=[
+    validators.DataRequired(message='El campo es requerido'),
+    validators.length(min=1, max=25, message='Ingresa una palabra en Ingles')
+  ])
+  wordSpa = StringField('wordSpa', validators=[
+    validators.DataRequired(message='El campo es requerido'),
+    validators.length(min=1, max=25, message='Ingresa una palabra en Español')
+  ])
+  palabra = StringField('palabra')
+  selectLang = RadioField('selectLan', choices=[
+    (1, "ingles"),
+    (2, "espanol")
+  ])
 
 class UserFormDistance(Form):
   distanciaX = FloatField('distanciaX')
   distanciaX2 = FloatField('distanciaX2')
   distanciaY = FloatField('distanciaY')
   distanciaY2 = FloatField('distanciaY2')
-
-
 
 class UserFormColors(Form):
   banda1 = SelectField ('banda1', choices=[
@@ -52,3 +65,6 @@ class UserFormColors(Form):
     (1000000000, "Blanco (X1000000000)")
   ])
   tol = RadioField('tol')
+
+
+

@@ -1,7 +1,34 @@
 from flask import Flask, render_template, request
 import forms                # Importar archivo forms
+from archivoTexto import agregar_palabras, buscar_palabras
 app = Flask(__name__)
 import math
+
+@app.route("/idiomas", methods = ['GET', 'POST'])
+def idiomas():
+  wordEng = ""
+  wordSpa = ""
+  palabra = ""
+  wordEq = ""
+  selectLang = ""
+  idiomas_clase = forms.UserFormLanguagesWords(request.form)
+  
+  if request.method == 'POST': 
+    if "btn1" in request.form: 
+        wordEng = request.form.get('wordEng')
+        wordSpa = request.form.get('wordSpa')
+        agregar_palabras(wordEng, wordSpa)
+    elif "btn2" in request.form:
+        palabra = idiomas_clase.palabra.data
+        selectLang = idiomas_clase.selectLang.data
+        wordEq = buscar_palabras(palabra, selectLang)
+        if wordEq:
+          print("Respuesta: {}".format(wordEq))
+        else: 
+          print("Respuesta: {}".format(wordEq))
+     
+  return render_template("buscador-palabras.html", form = idiomas_clase, wordEng=wordEng, wordSpa=wordSpa, palabra=palabra, wordEq=wordEq, selectLang=selectLang)
+
 
 @app.route("/calcular", methods=["GET", "POST"])
 def calcular():
@@ -221,7 +248,6 @@ def colores():
       valorMinimoIng = valor - porcentaje
     
   return render_template("colores-resistencias.html", form = colores_clase, banda1=banda1, banda2=banda2, banda3=banda3, tol=tol, primerB=primerB, valor=valor, valorMaximoIng=valorMaximoIng, valorMinimoIng=valorMinimoIng, colortd=colortd,colortd2=colortd2,colortd3=colortd3,colortol=colortol, textBanda1=textBanda1, textBanda2=textBanda2, textBanda3=textBanda3, textTol=textTol)
-
 
 if __name__ =="__main__":
   app.run(debug=True)   # Cambios en tiempo real
