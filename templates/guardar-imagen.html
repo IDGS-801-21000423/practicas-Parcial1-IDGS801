@@ -1,0 +1,13 @@
+{% extends "layout1.html" %}
+{% block content %}
+
+<h2>Guardar Imagen en carpeta proyecto y convertir a webp</h2>
+
+<form method="POST" enctype="multipart/form-data">
+  <input type="file" name="file" accept="image/*">
+  <input type="submit" value="subir">
+</form>
+{% if message %}
+<p>{{ message }}</p>
+{% endif %}
+{% endblock %}

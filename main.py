@@ -1,8 +1,12 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for, flash
 import forms                # Importar archivo forms
 from archivoTexto import agregar_palabras, buscar_palabras
 app = Flask(__name__)
 import math
+import os
+from PIL import Image
+from werkzeug.utils import secure_filename
+import cv2
 
 @app.route("/idiomas", methods = ['GET', 'POST'])
 def idiomas():
@@ -79,6 +83,141 @@ def result():
       num2 =request.form.get("n2")
       return"La division exacta de {} // {} = {}".format(num1, num2, str(int(num1) // int(num2)))
     
+    
+    
+app.config['UPLOAD_FOLDER'] = 'static/bootstrap/images-cookies'
+app.secret_key = 'tu_clave_secreta'
+
+# Metodo para probar la carga de una imagen a una carpeta del proyecto local, y conversion de esa imagen a .webp
+""" 
+@app.route('/cargar_imagen', methods=['GET', 'POST'])
+def cargar_imagen():
+  if request.method == 'POST':
+    # Verificar si se ha enviado un archivo
+    if 'file' not in request.files:
+        flash('No se ha seleccionado ningun archivo', 'error')
+        return redirect(request.url)
+    
+    file = request.files['file']
+    
+    # Verificar que el archivo tenga un nombre
+    if file.filename == '':
+      flash('El archivo no tiene un nombre valido', 'error')    
+      return redirect(request.url)
+    
+    # Verifica que el archivo tenga extension valida
+    if '.' not in file.filename or file.filename.rsplit('.', 1)[1].lower() not in {'png', 'jpg', 'jpeg', 'gif'}:
+      flash('El archivo debe tener una extension valida (png, jpg, jpeg, gif)', 'error')
+      return redirect(request.url)
+    
+    # Guardar el archivo en la carpeta de carga
+    filename = secure_filename(file.filename)
+    file_path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
+    file.save(file_path)
+    
+    # Convierte la imagen a formato WebP
+    imagen = Image.open(file_path)
+    #webp_file_path = file_path.rsplit('.', 1)[0] + '.webp'
+    webp_file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename.rsplit('.', 1)[0] + '.webp')
+    imagen.save(webp_file_path, 'webp')
+    
+    # Eliminar el fondo de la imagen webp
+    webp_image = cv2.imread(webp_file_path)
+    gray = cv2.cvtColor(webp_image, cv2.COLOR_BGR2GRAY)
+    _, mask = cv2.threshold(gray, 1, 255, cv2.THRESH_BINARY)
+    final_image = cv2.bitwise_and(webp_image, webp_image, mask=mask)
+    
+    # Guardar la imagen sin el fondo en formato Webp
+    cv2.imwrite(webp_file_path, final_image)
+    
+    # Elimina el archivo original
+    os.remove(file_path)
+    
+    flash('Imagen cargada exitosamente y convertida a WEBP exitosamente', 'success')
+    return redirect(url_for('cargar_imagen'))
+  return render_template('guardar-imagen.html')
+    
+ """
+ 
+app.config['UPLOAD_FOLDER'] = 'static/bootstrap/images-cookies'
+app.secret_key = 'tu_clave_secreta'
+
+
+# Metodo para probar la carga de una imagen a una carpeta del proyecto local, y conversion de esa imagen .webp
+@app.route('/cargar_imagen', methods=['GET', 'POST'])
+def cargar_imagen():
+  if request.method == 'POST':
+    # Verificar si se ha enviado un archivo
+    if 'file' not in request.files:
+        flash('No se ha seleccionado ningun archivo', 'error')
+        return redirect(request.url)
+    
+    file = request.files['file']
+    
+    # Verificar que el archivo tenga un nombre
+    if file.filename == '':
+      flash('El archivo no tiene un nombre valido', 'error')    
+      return redirect(request.url)
+    
+    # Verifica que el archivo tenga extension valida
+    if '.' not in file.filename or file.filename.rsplit('.', 1)[1].lower() not in {'png', 'jpg', 'jpeg', 'gif'}:
+      flash('El archivo debe tener una extension valida (png, jpg, jpeg, gif)', 'error')
+      return redirect(request.url)
+    
+    # Guardar el archivo en la carpeta de carga
+    filename = secure_filename(file.filename)
+    file_path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
+    file.save(file_path)
+    
+    # Convierte la imagen a formato WebP
+    imagen = Image.open(file_path)
+    #webp_file_path = file_path.rsplit('.', 1)[0] + '.webp'
+    webp_file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename.rsplit('.', 1)[0] + '.webp')
+    imagen.save(webp_file_path, 'webp')
+    
+    # Elimina el archivo original
+    os.remove(file_path)
+    
+    flash('Imagen cargada exitosamente y convertida a WEBP exitosamente', 'success')
+    return redirect(url_for('cargar_imagen'))
+  return render_template('guardar-imagen.html')
+
+
+# Guardar imagen en una carpeta del proyecto local    
+""" 
+@app.route('/cargar_imagen', methods=['GET', 'POST'])
+def cargar_imagen():
+  if request.method == 'POST':
+    # Verificar si se ha enviado un archivo
+    if 'file' not in request.files:
+        flash('No se ha seleccionado ningun archivo', 'error')
+        return redirect(request.url)
+    
+    file = request.files['file']
+    
+    # Verificar que el archivo tenga un nombre
+    if file.filename == '':
+      flash('El archivo no tiene un nombre valido', 'error')    
+      return redirect(request.url)
+    
+    # Verifica que el archivo tenga extension valida
+    if '.' not in file.filename or file.filename.rsplit('.', 1)[1].lower() not in {'png', 'jpg', 'jpeg', 'gif'}:
+      flash('El archivo debe tener una extension valida (png, jpg, jpeg, gif)', 'error')
+      return redirect(request.url)
+    
+    
+    # Guardar el archivo en la carpeta de carga
+    file_path = os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(file.filename))
+    file.save(file_path)
+    
+    flash('Imagen cargada exitosamente', 'success')
+    return redirect(url_for('cargar_imagen'))
+  return render_template('guardar-imagen.html')
+ """
+
+
+
+
 
 @app.route("/distancias", methods = ['GET', 'POST'])
 def distancias():
